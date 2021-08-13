@@ -1,12 +1,11 @@
 (load "nondeterminism.scm")
 
-(define anatomy '((nose (deviated-septum breath-right-strips))
-                  (tongue (vacuum-activator cpap))
-                  (pharyngeal (closed-mouth mad surgery))
-                  (maxilla (agga surgery))
-                  (inflammation (allergies sugar))))
-
-;; simplify to good bad, also include previous interventions
+(define all-possible-fixes
+  '((nose (breath-right deviated-septum-surgery))
+    (tongue (gopex vacuum-activator cpap))
+    (pharyngeal (closed-mouth mad surgery))
+    (maxilla (agga surgery))
+    (inflammation (allergies sugar))))
 
 (define user-situation
   '((nose good)
@@ -15,35 +14,26 @@
     (maxilla good)
     (inflammation good)))
 
-(define user-inverventions
+(define previous-interventions
   '((nose (breathe-right deviated-septum-surgery))
-    (tongue (gopex vacuum-activator))
-    (pharyngeal (closed-mouth mad))
-    (maxilla (agga surgery))
+    (tongue (gopex vacuum-activator cpap))
+    (pharyngeal (closed-mouth))
+    (maxilla (agga))
     (inflammation (sugar allergies))))
 
 
-(define (fixes part)
-  (cadr (assq part anatomy)))
+(define (fixes part lookup)
+  (cadr (assq part lookup)))
 
 
 (let ((area-of-focus (choose user-situation)))
   (if (eq? (cadr area-of-focus) 'good)
       (fail)
       (let* ((problem-part (car area-of-focus))
-             (suggestion (car (fixes problem-part))))
-        (begin
-          (display (cdr area-of-focus))
-          (if (member suggestion (cdr area-of-focus))
-              `(You should focus on ,problem-part have you tried ,suggestion ?)
-              (fail))))))
-
-we need a choose for every fail
+             (suggestion (choose (fixes problem-part all-possible-fixes))))
+        (if (member suggestion (fixes problem-part previous-interventions))
+            (fail)
+            `(You should focus on ,problem-part have you tried ,suggestion ?)))))
 
 
 
-
-(member closed-mouth)
-
-
-(pair? (member 'closed-mouth '(bad eagle)))
