@@ -9,11 +9,18 @@
 ;; simplify to good bad, also include previous interventions
 
 (define user-situation
-  '((nose good breathe-right deviated-septum-surgery)
-    (tongue good gopex vacuum-activator)
-    (pharyngeal bad closed-mouth)
+  '((nose good)
+    (tongue good)
+    (pharyngeal bad)
     (maxilla good)
-    (inflammation)))
+    (inflammation good)))
+
+(define user-inverventions
+  '((nose (breathe-right deviated-septum-surgery))
+    (tongue (gopex vacuum-activator))
+    (pharyngeal (closed-mouth mad))
+    (maxilla (agga surgery))
+    (inflammation (sugar allergies))))
 
 
 (define (fixes part)
@@ -30,6 +37,8 @@
           (if (member suggestion (cdr area-of-focus))
               `(You should focus on ,problem-part have you tried ,suggestion ?)
               (fail))))))
+
+we need a choose for every fail
 
 
 
