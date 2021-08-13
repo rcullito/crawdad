@@ -1,3 +1,5 @@
+(load "nondeterminism.scm")
+
 (define anatomy '((nose (deviated-septum breath-right-strips))
                   (tongue (vacuum-activator cpap))
                   (pharyngeal (sleep-tape mad))
@@ -12,8 +14,8 @@
     (inflammation ok)))
 
 
-(define (part-fixes part)
-  (cadr (assq part anatomy)))
 
-
-(part-fixes 'inflammation)
+(let ((area-of-focus (choose user-situation)))
+  (if (eq? (cadr area-of-focus) 'ok)
+      (fail)
+      `(you should focus on ,(car area-of-focus))))
