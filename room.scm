@@ -31,3 +31,5 @@
 
 (multiple-dwelling)
 
+;=> ((baker 3) (cooper 2) (fletcher 4) (miller 5) (smith 1))
+
