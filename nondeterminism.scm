@@ -46,3 +46,7 @@
                (let ((p1 (car *paths*)))
                  (set! *paths* (cdr *paths*))
                  (p1)))))))
+
+
+(define (require p)
+  (if (not p) (fail)))
